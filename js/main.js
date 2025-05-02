@@ -1,7 +1,7 @@
 // Sample data structure for articles
 const articles = [
     {
-        id: 1,
+        id: "2025-sabaragamuwa-rag",
         title: "Ragging incident at Sabaragamuwa University (2025)",
         date: "2025-05-02",
         lastModified: "2025-05-02",
