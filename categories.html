@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - NeverForgetSL</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="index.html" class="brand-logo">NeverForgetSL</a>
+                <ul class="nav-links">
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="categories-section">
+            <h1>Categories</h1>
+            <div class="category-list" id="categoryList">
+                <!-- Categories will be loaded dynamically -->
+            </div>
+        </section>
+
+        <section class="category-articles">
+            <!-- Category sections will be loaded dynamically -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="currentYear"></span> NeverForgetSL. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Additional JavaScript for categories page
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoryArticles = document.querySelector('.category-articles');
+            
+            // Create sections for each category
+            categories.forEach(category => {
+                const categorySection = document.createElement('section');
+                categorySection.id = category.toLowerCase();
+                categorySection.className = 'category-section';
+                
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.textContent = category;
+                categorySection.appendChild(categoryTitle);
+
+                const articleList = document.createElement('div');
+                articleList.className = 'article-list';
+
+                // Filter articles for this category
+                const categoryArticles = articles.filter(article => 
+                    article.categories.includes(category)
+                ).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                categoryArticles.forEach(article => {
+                    articleList.appendChild(createArticlePreview(article));
+                });
+
+                categorySection.appendChild(articleList);
+                document.querySelector('.category-articles').appendChild(categorySection);
+            });
+
+            // Handle hash navigation
+            function scrollToCategory() {
+                const hash = window.location.hash.slice(1);
+                if (hash) {
+                    const element = document.getElementById(hash);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            }
+
+            // Initial scroll
+            scrollToCategory();
+
+            // Handle hash changes
+            window.addEventListener('hashchange', scrollToCategory);
+        });
+    </script>
+</body>
+</html> 

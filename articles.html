@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - NeverForgetSL</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="index.html" class="brand-logo">NeverForgetSL</a>
+                <ul class="nav-links">
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="articles-section">
+            <h1>All Articles</h1>
+            <div class="article-filters">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search articles...">
+                </div>
+                <div class="category-filter">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <!-- Categories will be loaded dynamically -->
+                    </select>
+                </div>
+            </div>
+            <div class="article-list" id="allArticles">
+                <!-- Articles will be loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="currentYear"></span> NeverForgetSL. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Additional JavaScript for articles page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load all articles
+            const allArticles = document.getElementById('allArticles');
+            const sortedArticles = [...articles].sort((a, b) => 
+                new Date(b.date) - new Date(a.date)
+            );
+            
+            sortedArticles.forEach(article => {
+                allArticles.appendChild(createArticlePreview(article));
+            });
+
+            // Populate category filter
+            const categoryFilter = document.getElementById('categoryFilter');
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.toLowerCase();
+                option.textContent = category;
+                categoryFilter.appendChild(option);
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', filterArticles);
+            categoryFilter.addEventListener('change', filterArticles);
+
+            function filterArticles() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedCategory = categoryFilter.value.toLowerCase();
+                
+                const filteredArticles = sortedArticles.filter(article => {
+                    const matchesSearch = article.title.toLowerCase().includes(searchTerm);
+                    const matchesCategory = !selectedCategory || 
+                        article.categories.some(cat => cat.toLowerCase() === selectedCategory);
+                    return matchesSearch && matchesCategory;
+                });
+
+                allArticles.innerHTML = '';
+                filteredArticles.forEach(article => {
+                    allArticles.appendChild(createArticlePreview(article));
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
