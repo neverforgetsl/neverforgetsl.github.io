@@ -8,6 +8,14 @@ const articles = [
         categories: ["Ragging", "News"],
         content: "An article about the ragging incident at Sabaragamuwa University in 2025 including the list of culprits."
     },
+    {
+        id: "2015-sabaragamuwa-rag",
+        title: "Ragging incident at Sabaragamuwa University (2015)",
+        date: "2025-01-02",
+        lastModified: "2025-02-02",
+        categories: ["Ragging", "News"],
+        content: "An article about the ragging incident at Sabaragamuwa University in 2015 including the list of culprits."
+    }
     // Add more articles here
 ];
 
